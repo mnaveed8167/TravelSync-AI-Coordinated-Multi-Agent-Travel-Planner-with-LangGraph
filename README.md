@@ -2,6 +2,23 @@
 
 An open-source AI travel planner that turns a natural-language trip request into a practical travel plan with flight suggestions, hotel ideas, and a day-by-day itinerary. The project uses a multi-agent workflow built with LangGraph, LangChain, and FastAPI.
 
+## 🏗️ Project Architecture
+
+The system utilizes a modular, multi-agent workflow coordinated by LangGraph, with robust state persistence powered by PostgreSQL.
+
+![TravelSync AI Architecture](Architecture.png)
+
+### Architectural Overview
+The architecture is designed to cleanly separate concerns—isolating raw data fetching, workflow orchestration, computational reasoning, and state durability:
+
+- **Multi-Agent Layer**:
+  - **1. Flight Agent**: Queries flight data using the AviationStack API, verified by Tavily search.
+  - **2. Hotel Agent**: Sources accommodation options using Tavily search and Google Places API.
+  - **3. Itinerary Agent**: Designs structured day-by-day itineraries utilizing Tavily search and Google Maps API (Places and Directions).
+  - **4. Final Response Agent**: Synthesizes inputs into a polished response using the Groq LLM (Llama 3) and Tavily search.
+- **Shared State (`TravelState`)**: Acts as the central data bus, tracking `user_query`, `flight_results`, `hotel_results`, `itinerary`, `final_response`, and message history.
+- **Persistence Layer**: PostgreSQL provides long-term memory, storing conversation history, user preferences, and state updates to ensure session continuity.
+
 ## Why this project?
 
 Planning a trip usually means jumping between multiple websites, tools, and spreadsheets. This project brings that flow into one experience by combining:
