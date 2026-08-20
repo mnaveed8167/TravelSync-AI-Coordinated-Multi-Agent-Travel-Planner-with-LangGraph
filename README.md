@@ -8,6 +8,7 @@ TravelSync AI is a LangGraph-powered multi-agent travel planner that transforms 
 '''bash
 conda create -n travel python 3.11 -y
 '''
+
 2. Activate the Environment
 
 '''bash
